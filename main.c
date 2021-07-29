@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jedelfos <jedelfos@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/07/29 16:19:07 by jedelfos          #+#    #+#             */
+/*   Updated: 2021/07/29 16:19:11 by jedelfos         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -107,9 +119,9 @@ int	sb(t_var **list)
 
 int	ss(t_var **list)
 {
-	write (1, "ss\n", 3);
 	t_list	*temp;
 
+	write (1, "ss\n", 3);
 	list[0]->coup++;
 	temp = list[0]->first->next;
 	list[0]->first->next = temp->next;
@@ -686,7 +698,9 @@ int	very_low_nb(t_var **list)
 	{
 		ra(list);
 		if (list[1]->first != NULL && list[1]->first->val == 5)
+		{
 			ss(list);
+		}
 		else
 			sa(list);
 		rra(list);
@@ -715,14 +729,15 @@ int	low_nb(t_var **list)
 			ra(list);
 		min_max(list);
 	}
-	very_low_nb(list);
+	if (!(is_sort(list)))
+		very_low_nb(list);
 	min_max(list);
 	if (list[1]->first != NULL && list[1]->first->val == 5)
 		sb(list);
 	pa(list);
 	ra(list);
 	min_max(list);
-	if (list[1]->first->val == 5)
+	if (list[1]->first != NULL && list[1]->first->val == 5)
 	{
 		pa(list);
 		ra(list);
