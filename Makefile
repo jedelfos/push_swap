@@ -27,7 +27,7 @@ all:		$(NAME)
 $(OBJS):	$(INC)
 
 
-$(NAME): 	$(INC) $(OBJS) lib
+$(NAME): 	$(INC) $(OBJS)
 	gcc $(CFLAGS) $(OBJS) -o $(NAME)
 
 clean:
@@ -38,4 +38,4 @@ fclean: 	clean
 
 re:		fclean all
 
-.PHONY: all bonus clean fclean re lib
+.PHONY: all bonus clean fclean re
