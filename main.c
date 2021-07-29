@@ -21,6 +21,60 @@ typedef struct s_list
 	struct s_list	*prec;
 }					t_list;
 
+typedef struct s_malloc
+{
+	void			*adr;
+	struct s_malloc	*next;
+}					t_malloc;
+
+int	stop(int i);
+
+void	*s_malloc_util(size_t size, t_malloc *secure)
+{
+	t_malloc	*temp;
+
+	temp = secure;
+	while (temp->next != NULL)
+		temp = temp->next;
+	temp->adr = malloc(size);
+	if (temp->adr == NULL)
+		stop(2);
+	temp->next = malloc(sizeof(secure));
+	if (temp->next == NULL)
+		stop(2);
+	temp->next->adr = NULL;
+	temp->next->next = NULL;
+	return (temp->adr);
+}
+
+void	*s_malloc(int operation, size_t size)
+{
+	static t_malloc	*secure;
+	t_malloc		*temp;
+
+	if (operation == 1)
+	{
+		if (secure == NULL)
+		{
+			secure = malloc(sizeof(secure));
+			if (secure == NULL)
+				stop(2);
+			secure->adr = NULL;
+			secure->next = NULL;
+		}
+		return (s_malloc_util(size, secure));
+	}
+	while (secure != NULL)
+	{
+		temp = secure;
+		secure = secure->next;
+		if (temp->adr != NULL)
+			free(temp->adr);
+		free (temp);
+	}
+	return (NULL);
+}
+
 int	sa(t_var **list)
 {
 	t_list	*temp;
@@ -54,8 +108,21 @@ int	sb(t_var **list)
 int	ss(t_var **list)
 {
 	write (1, "ss\n", 3);
-	sa(list);
-	sb(list);
+	t_list	*temp;
+
+	list[0]->coup++;
+	temp = list[0]->first->next;
+	list[0]->first->next = temp->next;
+	list[0]->first->prec = temp;
+	temp->next = list[0]->first;
+	temp->prec = NULL;
+	list[0]->first = temp;
+	temp = list[1]->first->next;
+	list[1]->first->next = temp->next;
+	list[1]->first->prec = temp;
+	temp->next = list[1]->first;
+	temp->prec = NULL;
+	list[1]->first = temp;
 	return (0);
 }
 
@@ -183,10 +250,13 @@ int	pb(t_var **list)
 	return (0);
 }
 
-int	error(int i)
+int	stop(int i)
 {
+	s_malloc (0, 0);
 	if (i == 1)
-		write (1, "error\n", 6);
+		write (1, "Error\n", 6);
+	if (i == 2)
+		write (1, "Error malloc\n", 13);
 	exit(0);
 	return (0);
 }
@@ -209,7 +279,7 @@ static int	calc(int i, const char *str, int sign)
 		i++;
 	}
 	if (j == i)
-		error(1);
+		stop(1);
 	return (result);
 }
 
@@ -231,7 +301,7 @@ int	ft_atoi(char *str, int i)
 		i++;
 		if (str[i] == '+' || str[i] == '-'
 			|| (!(str[i] >= '0' && str[i] <= '9')))
-			error(1);
+			stop(1);
 	}
 	result = calc(i, str, sign);
 	if (sign % 2 == 0)
@@ -273,9 +343,7 @@ t_list	*ft_lstnew(int content, int *val)
 	int		i;
 
 	i = 0;
-	result = (t_list *)malloc(sizeof(t_list));
-	if (!(result))
-		exit(0);
+	result = (t_list *)s_malloc(1, sizeof(t_list));
 	result->next = NULL;
 	result->prec = NULL;
 	result->content = content;
@@ -318,7 +386,7 @@ void	ft_sort_int_tab(int *tab, int size)
 			i++;
 		}
 		if (i > 0 && tab[i - 1] == tab[i])
-			error(1);
+			stop(1);
 	}
 }
 
@@ -328,9 +396,7 @@ t_var	**list_m_param(t_var **list, int argc, char **argv)
 	int	*val;
 
 	y = 0;
-	val = malloc(sizeof(int) * argc);
-	if (!(val))
-		exit(0);
+	val = s_malloc(1, sizeof(int) * argc);
 	while (y < argc - 1)
 	{
 		val[y] = ft_atoi(argv[y + 1], 0);
@@ -343,7 +409,6 @@ t_var	**list_m_param(t_var **list, int argc, char **argv)
 		ft_lstadd_back(list[0], ft_atoi(argv[y], 0), val);
 		y++;
 	}
-	free(val);
 	return (list);
 }
 
@@ -383,11 +448,8 @@ t_var	**list_s_param(t_var **list, char **argv)
 		y = skip_word(argv[1], y);
 		i++;
 	}
-	val = malloc(sizeof(int) * i);
-	if (!(val))
-		exit(0);
+	val = s_malloc(1, sizeof(int) * i);
 	list = list_s_param_utils(list, argv, val, i);
-	free(val);
 	return (list);
 }
 
@@ -397,17 +459,11 @@ t_var	**create_list(int argc, char **argv)
 	int		y;
 
 	y = 0;
-	list = malloc(sizeof(t_var *) * 2);
-	if (!(list))
-		exit(0);
-	list[0] = malloc(sizeof(t_var));
-	if (!(list[0]))
-		exit(0);
+	list = s_malloc(1, sizeof(t_var *) * 2);
+	list[0] = s_malloc(1, sizeof(t_var));
 	list[0]->first = NULL;
 	list[0]->last = NULL;
-	list[1] = malloc(sizeof(t_var));
-	if (!(list[1]))
-		exit(0);
+	list[1] = s_malloc(1, sizeof(t_var));
 	list[1]->first = NULL;
 	list[1]->last = NULL;
 	if (argc > 2)
@@ -501,14 +557,11 @@ int	calc_score(t_var **list)
 	int		*score;
 	t_list	*temp;
 
-	score = malloc(sizeof(int) * 2);
-	if (score == NULL)
-		error(0);
+	score = s_malloc(1, sizeof(int) * 2);
 	score[0] = 0;
 	score[1] = 0;
 	score = calc_score_top(list, score);
 	score = calc_score_bot(list, score);
-	free (score);
 	return (score[0]);
 }
 
@@ -592,7 +645,7 @@ int	check_argv(int argc, char **argv)
 	int	y;
 
 	if (argc == 1)
-		error(1);
+		stop(1);
 	i = 1;
 	y = 0;
 	while (argc > i)
@@ -604,12 +657,89 @@ int	check_argv(int argc, char **argv)
 				|| argv[i][y] == '\v' || argv[i][y] == '\f'
 				|| argv[i][y] == '\r' || argv[i][y] == ' '
 				|| argv[i][y] == '+' || argv[i][y] == '-'))))
-				error(1);
+				stop(1);
 			y++;
 		}
 		y = 0;
 		i++;
 	}
+	return (0);
+}
+
+int	very_low_nb_utils(t_var **list)
+{
+	if (list[0]->first->next->val == 1)
+		ra(list);
+	else
+	{
+		sa(list);
+		rra(list);
+	}
+	return (0);
+}
+
+int	very_low_nb(t_var **list)
+{
+	if (list[0]->n_val == 2)
+		sa(list);
+	else if (list[0]->first->val == 1)
+	{
+		ra(list);
+		if (list[1]->first != NULL && list[1]->first->val == 5)
+			ss(list);
+		else
+			sa(list);
+		rra(list);
+	}
+	else if (list[0]->first->val == 2)
+	{
+		if (list[0]->first->next->val == 1)
+			sa(list);
+		else
+			rra(list);
+	}
+	else if (list[0]->first->val == 3)
+		very_low_nb_utils(list);
+	if (list[1]->n_val == 0)
+		stop (0);
+	return (0);
+}
+
+int	low_nb(t_var **list)
+{
+	while (list[0]->n_val > 3)
+	{
+		if (list[0]->first->val == 5 || list[0]->first->val == 4)
+			pb(list);
+		else
+			ra(list);
+		min_max(list);
+	}
+	very_low_nb(list);
+	min_max(list);
+	if (list[1]->first != NULL && list[1]->first->val == 5)
+		sb(list);
+	pa(list);
+	ra(list);
+	min_max(list);
+	if (list[1]->first->val == 5)
+	{
+		pa(list);
+		ra(list);
+	}
+	stop (0);
+	return (0);
+}
+
+int	low_check(t_var **list)
+{
+	min_max(list);
+	list[0]->coup = 0;
+	if (list[0]->n_val > 5)
+		return (0);
+	if (list[0]->n_val <= 3)
+		very_low_nb(list);
+	low_nb(list);
 	return (0);
 }
 
@@ -621,9 +751,8 @@ int	main(int argc, char **argv)
 	check_argv(argc, argv);
 	list = (t_var **)create_list(argc, argv);
 	if (is_sort(list))
-		exit(0);
-	list[0]->coup = 0;
-	list[1]->coup = 0;
+		stop(0);
+	low_check(list);
 	while (list[0]->first->next != NULL)
 	{
 		min_max(list);
@@ -638,5 +767,6 @@ int	main(int argc, char **argv)
 		place = cherche(list[1], list[1]->max);
 		positionement_final(list, place);
 	}
+	s_malloc (0, 0);
 	return (0);
 }
