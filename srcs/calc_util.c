@@ -6,11 +6,11 @@
 /*   By: jedelfos <jedelfos@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 16:50:43 by jedelfos          #+#    #+#             */
-/*   Updated: 2021/07/29 17:08:01 by jedelfos         ###   ########lyon.fr   */
+/*   Updated: 2021/07/29 17:18:29 by jedelfos         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/push_swap.h"
+#include "../includes/push_swap.h"
 
 static int	calc(int i, const char *str, int sign)
 {

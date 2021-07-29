@@ -6,11 +6,11 @@
 /*   By: jedelfos <jedelfos@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 16:51:22 by jedelfos          #+#    #+#             */
-/*   Updated: 2021/07/29 17:09:23 by jedelfos         ###   ########lyon.fr   */
+/*   Updated: 2021/07/29 17:18:58 by jedelfos         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/push_swap.h"
+#include "../includes/push_swap.h"
 
 t_var	**list_m_param(t_var **list, int argc, char **argv)
 {

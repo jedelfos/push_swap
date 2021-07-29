@@ -6,11 +6,11 @@
 /*   By: jedelfos <jedelfos@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 16:53:33 by jedelfos          #+#    #+#             */
-/*   Updated: 2021/07/29 17:08:10 by jedelfos         ###   ########lyon.fr   */
+/*   Updated: 2021/07/29 17:19:20 by jedelfos         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/push_swap.h"
+#include "../includes/push_swap.h"
 
 int	*calc_score_top(t_var **list, int *score)
 {
@@ -67,7 +67,6 @@ int	*calc_score_bot(t_var **list, int *score)
 int	calc_score(t_var **list)
 {
 	int		*score;
-	t_list	*temp;
 
 	score = s_malloc(1, sizeof(int) * 2);
 	score[0] = 0;

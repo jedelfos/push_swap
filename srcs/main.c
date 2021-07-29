@@ -6,11 +6,11 @@
 /*   By: jedelfos <jedelfos@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 16:19:07 by jedelfos          #+#    #+#             */
-/*   Updated: 2021/07/29 17:08:55 by jedelfos         ###   ########lyon.fr   */
+/*   Updated: 2021/07/29 17:18:44 by jedelfos         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/push_swap.h"
+#include "../includes/push_swap.h"
 
 int	cherche(t_var *list, int num)
 {

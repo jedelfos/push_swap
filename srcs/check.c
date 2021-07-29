@@ -6,11 +6,11 @@
 /*   By: jedelfos <jedelfos@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 16:51:43 by jedelfos          #+#    #+#             */
-/*   Updated: 2021/07/29 17:08:19 by jedelfos         ###   ########lyon.fr   */
+/*   Updated: 2021/07/29 17:18:23 by jedelfos         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/push_swap.h"
+#include "../includes/push_swap.h"
 
 int	min_max(t_var **list)
 {

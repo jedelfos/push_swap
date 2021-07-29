@@ -6,11 +6,11 @@
 /*   By: jedelfos <jedelfos@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 16:51:04 by jedelfos          #+#    #+#             */
-/*   Updated: 2021/07/29 17:09:16 by jedelfos         ###   ########lyon.fr   */
+/*   Updated: 2021/07/29 17:18:53 by jedelfos         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/push_swap.h"
+#include "../includes/push_swap.h"
 
 t_list	*ft_lstnew(int content, int *val)
 {

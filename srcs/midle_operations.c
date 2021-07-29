@@ -6,11 +6,11 @@
 /*   By: jedelfos <jedelfos@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 16:50:08 by jedelfos          #+#    #+#             */
-/*   Updated: 2021/07/29 17:09:01 by jedelfos         ###   ########lyon.fr   */
+/*   Updated: 2021/07/29 17:18:47 by jedelfos         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/push_swap.h"
+#include "../includes/push_swap.h"
 
 int	rb(t_var **list)
 {
