@@ -6,7 +6,7 @@
 /*   By: jedelfos <jedelfos@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 16:55:39 by jedelfos          #+#    #+#             */
-/*   Updated: 2021/07/29 17:10:09 by jedelfos         ###   ########lyon.fr   */
+/*   Updated: 2021/08/09 10:14:34 by jedelfos         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ t_list	*ft_lstnew(int content, int *val);
 void	ft_lstadd_back(t_var *list, int content, int *val);
 void	ft_sort_int_tab(int *tab, int size);
 t_var	**list_m_param(t_var **list, int argc, char **argv);
-t_var	**list_s_param_utils(t_var **list, char **argv, int *val, int i);
-t_var	**list_s_param(t_var **list, char **argv);
 t_var	**create_list(int argc, char **argv);
 int		min_max(t_var **list);
 int		*calc_score_top(t_var **list, int *score);

@@ -6,7 +6,7 @@
 /*   By: jedelfos <jedelfos@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 16:50:43 by jedelfos          #+#    #+#             */
-/*   Updated: 2021/07/29 17:18:29 by jedelfos         ###   ########lyon.fr   */
+/*   Updated: 2021/08/09 10:14:51 by jedelfos         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,16 @@ static int	calc(int i, const char *str, int sign)
 
 	result = 0;
 	j = i;
-	while (str[i] >= '0' && str[i] <= '9')
+	while (str[i])
 	{
+		if (!(str[i] >= '0' && str[i] <= '9'))
+			stop(1);
 		result = result * 10;
 		result = result + (str[i] - '0');
 		if (result > 2147483648 && sign == 1)
-			return (0);
+			stop(1);
 		if (result > 2147483647 && sign == 0)
-			return (-1);
+			stop(1);
 		i++;
 	}
 	if (j == i)
@@ -40,20 +42,13 @@ int	ft_atoi(char *str, int i)
 	int	sign;
 
 	sign = 0;
-	while (str[i] == '\t' || str[i] == '\n' || str[i] == '\v'
-		|| str[i] == '\f' || str[i] == '\r' || str[i] == ' ')
+	if (str[i] == '-')
 	{
+		sign++;
 		i++;
 	}
-	if (str[i] == '+' || str[i] == '-')
-	{
-		if (str[i] == '-')
-			sign++;
-		i++;
-		if (str[i] == '+' || str[i] == '-'
-			|| (!(str[i] >= '0' && str[i] <= '9')))
-			stop(1);
-	}
+	if (!(str[i] >= '0' && str[i] <= '9'))
+		stop(1);
 	result = calc(i, str, sign);
 	if (sign % 2 == 0)
 		return (result);
